@@ -440,13 +440,14 @@ pub(crate) fn scan_atx_heading(data: &[u8]) -> Option<(usize, i32)> {
 /// Scan a setext heading underline.
 ///
 /// Returns number of bytes in line (including trailing newline) and level.
-pub(crate) fn scan_setext_heading(data: &[u8]) -> Option<(usize, i32)> {
-    let c = *data.get(0)?;
-    if !(c == b'-' || c == b'=') { return None; }
-    let mut i = 1 + scan_ch_repeat(&data[1..], c);
-    i += scan_blank_line(&data[i..])?;
-    let level = if c == b'=' { 1 } else { 2 };
-    Some((i, level))
+pub(crate) fn scan_setext_heading(_data: &[u8]) -> Option<(usize, i32)> {
+    // let c = *data.get(0)?;
+    // if !(c == b'-' || c == b'=') { return None; }
+    // let mut i = 1 + scan_ch_repeat(&data[1..], c);
+    // i += scan_blank_line(&data[i..])?;
+    // let level = if c == b'=' { 1 } else { 2 };
+    // Some((i, level))
+    None
 }
 
 // returns number of bytes in line (including trailing
@@ -814,32 +815,33 @@ pub(crate) fn scan_link_dest(data: &str, start_ix: usize, max_next: usize) -> Op
 
 /// Returns next byte index, url and title.
 pub(crate) fn scan_inline_link(underlying: &str, start_ix: usize) -> Option<(usize, CowStr<'_>, CowStr<'_>)> {
-    let mut ix = start_ix;
-    if scan_ch(&underlying.as_bytes()[ix..], b'(') == 0 {
-        return None;
-    }
-    ix += 1;
-    ix += scan_while(&underlying.as_bytes()[ix..], is_ascii_whitespace);
+    // let mut ix = start_ix;
+    // if scan_ch(&underlying.as_bytes()[ix..], b'(') == 0 {
+    //     return None;
+    // }
+    // ix += 1;
+    // ix += scan_while(&underlying.as_bytes()[ix..], is_ascii_whitespace);
 
-    let (dest_length, dest) = scan_link_dest(underlying, ix, LINK_MAX_NESTED_PARENS)?;
-    let dest = unescape(dest);
-    ix += dest_length;
+    // let (dest_length, dest) = scan_link_dest(underlying, ix, LINK_MAX_NESTED_PARENS)?;
+    // let dest = unescape(dest);
+    // ix += dest_length;
 
-    ix += scan_while(&underlying.as_bytes()[ix..], is_ascii_whitespace);
+    // ix += scan_while(&underlying.as_bytes()[ix..], is_ascii_whitespace);
 
-    let title = if let Some((bytes_scanned, t)) = scan_link_title(underlying, ix) {
-        ix += bytes_scanned;
-        ix += scan_while(&underlying.as_bytes()[ix..], is_ascii_whitespace);
-        t
-    } else {
-        "".into()
-    };
-    if scan_ch(&underlying.as_bytes()[ix..], b')') == 0 {
-        return None;
-    }
-    ix += 1;
+    // let title = if let Some((bytes_scanned, t)) = scan_link_title(underlying, ix) {
+    //     ix += bytes_scanned;
+    //     ix += scan_while(&underlying.as_bytes()[ix..], is_ascii_whitespace);
+    //     t
+    // } else {
+    //     "".into()
+    // };
+    // if scan_ch(&underlying.as_bytes()[ix..], b')') == 0 {
+    //     return None;
+    // }
+    // ix += 1;
 
-    Some((ix, dest, title))
+    // Some((ix, dest, title))
+    None
 }
 
 /// Returns bytes scanned
