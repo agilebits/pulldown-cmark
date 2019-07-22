@@ -258,14 +258,7 @@ where
                 if !self.end_newline {
                     self.write_newline()?;
                 }
-                let lang = info.split(' ').next().unwrap();
-                if lang.is_empty() {
-                    self.write("<pre><code>")
-                } else {
-                    self.write("<pre><code class=\"language-")?;
-                    escape_html(&mut self.writer, lang)?;
-                    self.write("\">")
-                }
+                self.write("<pre>")
             }
             Tag::List(Some(1)) => {
                 if self.end_newline {
@@ -382,7 +375,7 @@ where
                 self.write("</blockquote>\n")?;
             }
             Tag::CodeBlock(_) => {
-                self.write("</code></pre>\n")?;
+                self.write("</pre>\n")?;
             }
             Tag::List(Some(_)) => {
                 self.write("</ol>\n")?;
